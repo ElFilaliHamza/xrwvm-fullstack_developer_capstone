@@ -45,6 +45,7 @@ img{
   color:  rgb(97, 64, 128);
   padding: 25%;
   font-size: larger;
+  cursor: pointer;
   }
 
 .loginlink{
