@@ -101,7 +101,9 @@ def get_cars(request):
 
 # Update the `get_dealerships` view to render the index page with
 # a list of dealerships
-def get_dealerships(request):
+def get_dealerships(request,state=""):
+    logger.info(f"get request with endpoint : {state}")
+
     if(state == "All"):
         endpoint = "/fetchDealers"
     else:
@@ -125,9 +127,15 @@ def get_dealer_reviews(request, dealer_id):
         return JsonResponse({"status":400,"message":"Bad Request"})
 
 # Create a `get_dealer_details` view to render the dealer details
-# def get_dealer_details(request, dealer_id):
-# ...
-
+def get_dealer_details(request, dealer_id):
+    # if dealer id has been provided
+    if(dealer_id):
+        endpoint = "/fetchDealer/"+str(dealer_id)
+        dealer = get_request(endpoint)
+        
+        return JsonResponse({"status":200,"dealer":dealer})
+    else:
+        return JsonResponse({"status":400,"message":"Bad Request"})
 # Create a `add_review` view to submit a review
 def add_review(request):
     if(request.user.is_anonymous == False):
