@@ -55,6 +55,9 @@ if ( curr_user !== null &&  curr_user !== "") {
                   <li class="nav-item">
                     <a class="nav-link" style={{fontSize: "larger"}} href="/contact">Contact Us</a>
                   </li>
+                  <li class="nav-item">
+                    <a class="nav-link" style={{fontSize: "larger"}} href="/dealers">Dealers</a>
+                  </li>
                 </ul>
                 <span class="navbar-text">
                   <div class="loginlink" id="loginlogout">
