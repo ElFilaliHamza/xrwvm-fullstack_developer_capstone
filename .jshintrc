@@ -1,0 +1,6 @@
+{
+  "esversion": 8,
+  // In this configuration, "sub": true tells JSHint to allow all forms of subscript notation, 
+  // effectively ignoring warnings about using bracket notation instead of dot notation.
+  "sub": true 
+}
