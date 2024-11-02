@@ -11,7 +11,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from .populate import initiate
 from .models import CarMake, CarModel
-from .restapis import get_request, analyze_review_sentiments, post_review
+from .restapis import get_request, analyze_review_sentiments, post_review  # noaqa: E501
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
@@ -101,11 +101,13 @@ def get_cars(request):
         car_models = CarModel.objects.select_related("car_make")
         cars = []
         for car_model in car_models:
-            cars.append({
-                    "CarModel": car_model.name, 
-                    "CarMake": car_model.car_make.name
-                    })
-            
+            cars.append(
+                {
+                    "CarModel": car_model.name,
+                    "CarMake": car_model.car_make.name,
+                }  # noaqa: E501
+            )
+
         return JsonResponse({"CarModels": cars})
     except Exception as err:
         return JsonResponse(
@@ -133,7 +135,7 @@ def get_dealer_reviews(request, dealer_id):
         endpoint = "/fetchReviews/dealer/" + str(dealer_id)
         reviews = get_request(endpoint)
         for review_detail in reviews:
-            response = analyze_review_sentiments(review_detail["review"])
+            response = analyze_review_sentiments(review_detail["review"])  # noaqa: E501
             print(response)
             review_detail["sentiment"] = response["sentiment"]
         return JsonResponse({"status": 200, "reviews": reviews})
@@ -155,13 +157,15 @@ def get_dealer_details(request, dealer_id):
 
 # Create a `add_review` view to submit a review
 def add_review(request):
-    if not request.user.is_anonymous :
+    if not request.user.is_anonymous:
         data = json.loads(request.body)
         try:
             _ = post_review(data)
             return JsonResponse({"status": 200})
         except Exception as err:
             print(err)
-            return JsonResponse({"status": 401, "message": "Error in posting review"})
+            return JsonResponse(
+                {"status": 401, "message": "Error in posting review"}
+            )  # noaqa: E501
     else:
         return JsonResponse({"status": 403, "message": "Unauthorized"})
