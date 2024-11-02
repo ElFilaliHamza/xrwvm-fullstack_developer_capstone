@@ -37,9 +37,10 @@ class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
     dealerId = models.IntegerField(null=True)
     name = models.CharField(max_length=64)
-    carType = models.CharField(max_length=5, choices=CAR_TYPES, default=CAR_TYPES[0]) # noaqa: E501
+    carType = models.CharField(max_length=5, choices=CAR_TYPES, default=CAR_TYPES[0])
     year = models.IntegerField(
-        default=2023, validators=[MaxValueValidator(2024), MinValueValidator(2015)] # noaqa: E501
+        default=2023,
+        validators=[MaxValueValidator(2024), MinValueValidator(2015)],
     )
 
     def __str__(self):

@@ -1,0 +1,10 @@
+[flake8]
+ignore = E203, W503, E501, E265
+max-line-length = 88
+exclude = 
+    .git,
+    __pycache__,
+    build,
+    dist,
+    djangoenv,
+    .venv
