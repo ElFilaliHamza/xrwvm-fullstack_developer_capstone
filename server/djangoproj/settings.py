@@ -29,7 +29,7 @@ SECRET_KEY = (
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-HF_APPLICATION_URL = "https://hamzafunrand-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai"  # noaqa: E501
+HF_APPLICATION_URL = "https://hamzafunrand-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/"  # noaqa: E501
 ALLOWED_HOSTS = ["localhost", HF_APPLICATION_URL + "/"]
 CSRF_TRUSTED_ORIGINS = [HF_APPLICATION_URL]
 
