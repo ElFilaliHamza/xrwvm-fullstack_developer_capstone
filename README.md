@@ -1,128 +1,131 @@
-# coding-project-template
+# Coding Project Template
 
-# Run the django app :
+This project is part of the Coursera Capstone Project from IBM's "Full Stack Application Development Capstone Project." It involves developing a full-stack application using various technologies such as Django, React, Node.js, and more.
 
-first install the virtual env and activate it :
+## Table of Contents
 
-```shell
-python3 -m pip install virtualenv
-python3 -m virtualenv djangoenv
-source djangoenv/bin/activate
-```
+1. [Project Overview](#project-overview)
+2. [Prerequisites](#prerequisites)
+3. [Setup and Installation](#setup-and-installation)
+4. [Running the Django Application](#running-the-django-application)
+5. [Configuring and Running the Sentiment Analysis App](#configuring-and-running-the-sentiment-analysis-app)
+6. [Launching the Node.js Application](#launching-the-nodejs-application)
+7. [Starting the Frontend](#starting-the-frontend)
+8. [Course Information](#course-information)
 
-than install the demendencies
+## Project Overview
 
-```shell
-pip install -r requirements.txt
-```
+This project demonstrates the development of a full-stack application, showcasing skills in frontend and backend development, containerization, and deployment on cloud platforms.
 
-Now run the migrations :
+## Prerequisites
 
-```shell
-python3 manage.py migrate --run-syncdb
-python3 manage.py makemigrations
-```
+- ![Python](https://img.shields.io/badge/Python-3.x-blue?logo=python&logoColor=white) Python 3.x
+- ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white) Docker
+- ![Node.js](https://img.shields.io/badge/Node.js-339933?logo=node.js&logoColor=white) Node.js and npm
+- ![IBM Cloud CLI](https://img.shields.io/badge/IBM%20Cloud%20CLI-052FAD?logo=ibmcloud&logoColor=white) IBM Cloud CLI (for Code Engine)
 
-## Configure and run the sentiment analysis app
+## Setup and Installation
 
-Run the app using docker commands than Run the docker image :
+### Virtual Environment
 
-```shell
-docker build . -t sentimerntanalysis
-docker run -d -p 5000:5000 sentimerntanalysis
-```
+1. Install and activate a virtual environment:
 
-Configure the django app environement variables (/server/djangoapp/.env)
-fill those variables :
+   ```shell
+   python3 -m pip install virtualenv
+   python3 -m virtualenv djangoenv
+   source djangoenv/bin/activate
+   ```
 
-```sh
-backend_url =https://hamzafunrand-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai
+2. Install the dependencies:
 
-sentiment_analyzer_url=https://sentianalyzer.1njfxxoakpee.us-south.codeengine.appdomain.cloud/
+   ```shell
+   pip install -r requirements.txt
+   ```
 
-```
+## Running the Django Application
 
-(don't forger to install the requirement.txt)
+1. Run the migrations:
 
-Now run the app using :
+   ```shell
+   python3 manage.py migrate --run-syncdb
+   python3 manage.py makemigrations
+   ```
 
-```shell
-python3 manage.py runserver
-```
+2. Configure the Django app environment variables in `/server/djangoapp/.env`:
 
-(create a root superuser if needed with the pwd root)
+   ```sh
+   backend_url=https://your-backend-url
+   sentiment_analyzer_url=https://your-sentiment-analyzer-url
+   ```
 
-### Configure this sentianalyse:
+3. Start the Django server:
 
+   ```shell
+   python3 manage.py runserver
+   ```
 
-Start the Code Engine
+   *Note: Create a superuser if needed with the password 'root'.*
 
-    Start code engine by creating a project.
+## Configuring and Running the Sentiment Analysis App
 
-    The code engine environment takes a while to prepare. You will see the progress status being indicated in the set up panel.
+1. Build and run the Docker image:
 
-    Once the code engine set up is complete, you can see that it is active. Click on Code Engine CLI to begin the pre-configured CLI in the terminal below.
+   ```shell
+   docker build . -t sentimentanalysis
+   docker run -d -p 5000:5000 sentimentanalysis
+   ```
 
-    You will observe that the pre-configured CLI statrup and the home directory is set to the current directory. As a part of the pre-configuration, the project has been set up and Kubeconfig is set up. The details that are shown on the terminal.
+2. Deploy the sentiment analysis service on IBM Code Engine:
 
+   - Navigate to the `server/djangoapp/microservices` directory.
+   - Build and push the Docker image:
 
-Deploy sentiment analysis on Code Engine as a microservice
+     ```shell
+     docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+     docker push us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+     ```
 
-    In the code engine CLI, change to server/djangoapp/microservices directory.
+   - Deploy the application:
 
-    1
+     ```shell
+     ibmcloud ce application create --name sentianalyzer --image us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer --registry-secret icr-secret --port 5000
+     ```
 
-    cd xrwvm-fullstack_developer_capstone/server/djangoapp/microservices
+3. Update the `.env` file with the new deployment URL.
 
-You have been provided with sentiment_analyzer.py which uses NLTK for sentiment analysis. You are also provided with a Dockerfile which you will use to deploy this service in Code Engine and consume it as a microservice. Take a look at these files.
+## Launching the Node.js Application
 
-    Run the following command to docker build the sentiment analyzer app
+1. Build and start the Node.js application:
 
-        Please note the code engine instance is transient and is attached to your lab space username.
+   ```shell
+   docker build . -t nodeapp
+   docker-compose up -d
+   ```
 
-    1
+## Starting the Frontend
 
-    docker build . -t us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+1. Install dependencies and build the frontend:
 
-    Push the docker image by running the following command.
+   ```shell
+   npm install
+   npm run build
+   ```
+## Contact Information
 
-    1
+For questions or support, please contact [me by email](hamzaelfilali1999.ac@gmail.com) or visit the project's discussion forum on Coursera.
 
-    docker push us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer
+## Course Information
 
-    Deploy the senti_analyzer application on code engine.
+This project is part of the IBM Full Stack Software Developer Specialization on Coursera. It covers:
 
-    1
+- Designing applications and their architecture
+- Creating web frontends with HTML, CSS, JavaScript, and React
+- Implementing user management and authentication
+- Developing backend services and database communication
+- CI/CD pipelines and cloud deployment
 
-    ibmcloud ce application create --name sentianalyzer --image us.icr.io/${SN_ICR_NAMESPACE}/senti_analyzer --registry-secret icr-secret --port 5000
+For more details, refer to the course on Coursera.
 
-    Connect to the URL that is generated to access the microservices and check if the deployment is successful.
+---
 
-    If the application deployment verification was successful, attach /analyze/Fantastic services to the URL in the browser to see if it returns positive. Take a screenshot of the sentiment along with the URL as shown below and save it as sentiment_analyzer.png or sentiment_analyzer.jpg.
-
-    Open djangoapp/.env and replace your code engine deployment url with the deployment URL you obtained above.
-
-    It is essential to include the / at the end of the URL. Please ensure that it is copied.
-
-    1
-
-    sentiment_analyzer_url=your code engine deployment url
-
-## lunch the nodeapp image
-
-Let's start by building the image 'nodeapp'
-
-```shell
-docker build . -t nodeapp | docker-compose up -d
-```
-
-## Now let's start our frontend :
-
-```shell
-npm install
-npm run build
-```
-
-For those apps you need to launch an app using the Skills Network Toolbox if you are using the IBM skills net .
-
-Well done!
+This README provides a structured overview of the project, setup instructions, and relevant course information. Adjust the URLs and paths as necessary for your specific environment.
