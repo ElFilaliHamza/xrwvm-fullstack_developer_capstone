@@ -1,0 +1,8 @@
+https://hamzafunrand-8000.theiadockernext-1-labs-prod-theiak8s-4-tor01.proxy.cognitiveclass.ai/
+
+
+username: hfun
+pwd: Admin@2024
+
+superadmin: root
+pwd: root
